@@ -1,8 +1,20 @@
 const express = require('express');
 const path = require('path');
+const moment = require('moment');
 const members = require('./members');
 
 const app = express();
+
+// Middleware
+// Every time a request is made, middleware is run
+const logger = (req, res, next) => {
+  // Log URL that's hit and the date
+  console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}: ${moment().format()}`);
+  next();
+};
+
+// Initialize middleware
+app.use(logger);
 
 // Return members JSON for get request from this route/endpoint
 app.get('/api/members', (req, res) =>

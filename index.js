@@ -3,7 +3,33 @@ const path = require('path');
 
 const app = express();
 
-// For static server that serves regular HTML files and CSS
+const members = [
+  {
+    id: 1,
+    name: 'John Doe',
+    email: 'john@gmail.com',
+    status: 'active'
+  },
+  {
+    id: 2,
+    name: 'Bob Williams',
+    email: 'bob@gmail.com',
+    status: 'inactive'
+  },
+  {
+    id: 3,
+    name: 'Shannon Jackson',
+    email: 'shannon@gmail.com',
+    status: 'active'
+  }
+];
+
+// Return members JSON for get request from this route/endpoint
+app.get('/api/members', (req, res) =>
+  // When sending data to a web server, the data has to be a string. members variable holds a JOSn object but should be a JSON string representation. However, don't need to use JSON.stringify() when using Express; with res.json(), the conversion is done for you. It does JSON.stringify(object, replacer, space), and once this method is called, the res.json() method will then call res.send() as well, under the hood
+  res.json(members));
+
+// For static server that serves regular HTML files and CSS (although typically you won't be using Express for this, but will be building JSON APIs to connect from a front end like React or render templates in which you insert dynamic data in order to have a dynamic app rather than just a static website)
 // Set static folder (use is method we use when we want to include middleware). We can put multiple HTML files and CSS in that folder and Express handles things like setting the content type and loading the files for us
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -1,0 +1,24 @@
+const express = require('express');
+const router = express.Router();
+const members = require('../../members');
+
+// Return members JSON for get request from this route/endpoint
+router.get('/', (req, res) =>
+  // When sending data to a web server, the data has to be a string. members variable holds a JOSn object but should be a JSON string representation. However, don't need to use JSON.stringify() when using Express; with res.json(), the conversion is done for you. It does JSON.stringify(object, replacer, space), and once this method is called, the res.json() method will then call res.send() as well, under the hood
+  res.json(members));
+
+// Get single member JSON
+/* Route parameters are named URL segments used to capture the values specified at their position in the URL. The named segments are prefixed with a colon and then the name (e.g. /:your_parameter_name/. The captured values are stored in the req.params object using the parameter names as keys (e.g., req.params.your_parameter_name). https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes */
+router.get('/:id', (req, res) => {
+  const found = members.some(member => member.id === parseInt(req.params.id));
+
+  if (found) {
+    // Have to wrap req.params.id in parseInt because req.params.id sends it as a string (triple equals used so types must match)
+    res.json(members.filter(member => member.id == parseInt(req.params.id)));
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+  }
+
+});
+
+module.exports = router;

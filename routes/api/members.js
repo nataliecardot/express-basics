@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const members = require('../../members');
+const uuid = require('uuid');
 
 // Return members JSON for get request from this route/endpoint
 router.get('/', (req, res) =>
@@ -19,6 +20,26 @@ router.get('/:id', (req, res) => {
     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
   }
 
+});
+
+// Create member from request body, add to members array
+// Whenever you're creating something on the server or adding to a database, you want to create a POST request
+router.post('/', (req, res) => {
+  const newMember = {
+    // Also when you're working with a database, IDs are typically created for you. Using uuid package to generate random ID
+    id: uuid.v4(),
+    name: req.body.name,
+    email: req.body.email,
+    status: 'active'
+  };
+
+  if (!newMember.name || !newMember.email) {
+    return res.status(400).json({ msg: 'Please include a name and email' });
+  }
+
+  members.push(newMember);
+  // Need to send response. The response is up to you, but here returning entire members array
+  res.json(members);
 });
 
 module.exports = router;

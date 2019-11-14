@@ -16,8 +16,15 @@ app.get('/api/members', (req, res) =>
 // Get single member JSON
 /* Route parameters are named URL segments used to capture the values specified at their position in the URL. The named segments are prefixed with a colon and then the name (e.g. /:your_parameter_name/. The captured values are stored in the req.params object using the parameter names as keys (e.g., req.params.your_parameter_name). https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes */
 app.get('/api/members/:id', (req, res) => {
-  // Have to wrap req.params.id in parseInt because req.params.id sends it as a string (triple equals used so types must match)
-  res.json(members.filter(member => member.id == parseInt(req.params.id)));
+  const found = members.some(member => member.id === parseInt(req.params.id));
+
+  if (found) {
+    // Have to wrap req.params.id in parseInt because req.params.id sends it as a string (triple equals used so types must match)
+    res.json(members.filter(member => member.id == parseInt(req.params.id)));
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+  }
+
 });
 
 // For static server that serves regular HTML files and CSS (although typically you won't be using Express for this, but will be building JSON APIs to connect from a front end like React or render templates in which you insert dynamic data in order to have a dynamic app rather than just a static website)

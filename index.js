@@ -9,7 +9,7 @@ const app = express();
 
 // Body parser middleware
 app.use(express.json());
-// For handling form submittions
+// For handling form submissions
 app.use(express.urlencoded({ extended: false }));
 
 // For static server that serves regular HTML files and CSS (although typically you won't be using Express for this, but will be building JSON APIs to connect from a front end like React or render templates in which you insert dynamic data in order to have a dynamic app rather than just a static website)

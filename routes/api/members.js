@@ -15,7 +15,7 @@ router.get('/:id', (req, res) => {
 
   if (found) {
     // Have to wrap req.params.id in parseInt because req.params.id sends it as a string (triple equals used so types must match)
-    res.json(members.filter(member => member.id == parseInt(req.params.id)));
+    res.json(members.filter(member => member.id === parseInt(req.params.id)));
   } else {
     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
   }
@@ -40,6 +40,29 @@ router.post('/', (req, res) => {
   members.push(newMember);
   // Need to send response. The response is up to you, but here returning entire members array
   res.json(members);
+});
+
+// Update member
+// When you update something on the server, in most cases it's a PUT request
+router.put('/:id', (req, res) => {
+  const found = members.some(member => member.id === parseInt(req.params.id));
+
+  if (found) {
+    const updMember = req.body;
+    members.forEach(member => {
+      if (member.id === parseInt(req.params.id)) {
+        member.name = updMember.name ? updMember.name : member.name;
+        member.email = updMember.email ? updMember.email : member.email;
+
+        // Destructuring being used for member; same as member: member (returning updated member)
+        res.json({ msg: 'Member updated', member });
+      }
+
+    });
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+  }
+
 });
 
 module.exports = router;

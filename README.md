@@ -2,9 +2,10 @@
 
 This is a basic application created for practice with Node.js and Express.
 
-#### Included features:
+### Included features:
 ✔ Creates a server\
-✔ Middleware and routing\
+✔ Middleware\
+✔ Routing\
 ✔ Serves static files using `Express.static()`\
 ✔ CRUD (create, read, update, delete) API\
 ✔ Renders template with template engine `express-handlebars`

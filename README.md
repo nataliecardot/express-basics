@@ -12,7 +12,7 @@ This is a basic application created for practice with Node.js and Express.
 
 ## Quick Start
 
-```
+```bash
 # Install dependencies
 npm install
 

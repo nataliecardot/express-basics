@@ -5,7 +5,8 @@ const uuid = require('uuid');
 
 // Return members JSON for get request from this route/endpoint
 router.get('/', (req, res) =>
-  // When sending data to a web server, the data has to be a string. members variable holds a JOSn object but should be a JSON string representation. However, don't need to use JSON.stringify() when using Express; with res.json(), the conversion is done for you. It does JSON.stringify(object, replacer, space), and once this method is called, the res.json() method will then call res.send() as well, under the hood
+  // When sending data to a web server, the data has to be a string. members variable holds a JSON object but should be a JSON string representation. However, don't need to use JSON.stringify() when using Express; with res.json(), the conversion is done for you. It does JSON.stringify(object, replacer, space), and once this method is called, the res.json() method will then call res.send() as well, under the hood
+  // res.json([body]) Sends a JSON response. This method sends a response (with the correct content-type) that is the parameter converted to a JSON string using JSON.stringify()
   res.json(members));
 
 // Get single member JSON
@@ -38,8 +39,11 @@ router.post('/', (req, res) => {
   }
 
   members.push(newMember);
-  // Need to send response. The response is up to you, but here returning entire members array
+  // Sending JSON response to client, the entire members array (which will then be displayed)
   res.json(members);
+
+  // Ususally if you're dealing with templates/server-rendered views, you'd redirect rather than displaying JSON, etg.:
+  // res.redirect('/');
 });
 
 // Update member

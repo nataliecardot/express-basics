@@ -40,11 +40,10 @@ router.post('/', (req, res) => {
 
   members.push(newMember);
   // Sending JSON response to client, the entire members array (which will then be displayed)
-  // May want to uncomment this and comment res.redirect('/') line below. Using the other method so upon adding a member, it will be displayed in the list on that page
-  // res.json(members);
+  res.json(members);
 
-  // Ususally if you're dealing with templates/server-rendered views, you'd redirect rather than displaying JSON, etg.:
-  res.redirect('/');
+  // Ususally if you're dealing with templates/server-rendered views, you'd redirect rather than displaying JSON, e.g.: However want to keep the current setup for API testing purposes
+  // res.redirect('/');
 });
 
 // Update member
